@@ -6,7 +6,7 @@ databases:
 
 services:
   - type: web
-    name: https:/sakamura_ken_iniad/.onrender.com
+    name: https://sakamura_ken_iniad/.onrender.com
     env: python
     plan: free
     branch: main
