@@ -14,6 +14,8 @@ def index(request):
 
     if request.GET.get('order') == 'due':
         tasks = Task.objects.order_by('due_at')
+    elif request.GET.get('order') == 'uncompleted':
+        tasks = Task.objects.order_by('completed','due_at')
     else:
         tasks = Task.objects.order_by('-posted_at')
 
@@ -55,4 +57,13 @@ def delete(request, task_id):
     except Task.DoesNotExist:
         raise Http404("Task does not exist")
     task.delete()
+    return redirect(index)
+
+def close(request, task_id):
+    try:
+        task = Task.objects.get(pk=task_id)
+    except Task.DoesNotExist:
+        raise Http404("Task does not exist")
+    task.completed = True
+    task.save()
     return redirect(index)
